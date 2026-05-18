@@ -32,6 +32,9 @@ int main() {
         float dt = clock.restart().asSeconds();
         for (auto& p : particles)
             p.update(dt);   
+
+        neighbourVector neighbours = buildNeighbourList(particles);
+        neighbourOverlap(particles, neighbours);
             
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && clickTime(lastSpawn) >= 0.05f) {
             count++;

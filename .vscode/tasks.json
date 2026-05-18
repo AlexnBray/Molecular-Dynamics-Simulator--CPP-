@@ -7,7 +7,7 @@
             "command": "cmd",
             "args": [
                 "/c",
-                "g++ main.cpp particle.cpp utils.cpp -o sim -std=c++17 -lsfml-graphics -lsfml-window -lsfml-system && .\\sim.exe"
+                "g++ main.cpp particle.cpp utils.cpp grid_particle.cpp -o sim -std=c++17 -lsfml-graphics -lsfml-window -lsfml-system && .\\sim.exe"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
