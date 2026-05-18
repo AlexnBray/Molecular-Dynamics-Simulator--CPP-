@@ -6,7 +6,7 @@ A particle-based physics simulation engine built from scratch in C++, implementi
 ## Overview
 This project simulates N particles interacting via the Lennard-Jones pair potential, one of the most fundamental models in computational physics and materials science. Particles evolve over time under Newtonian mechanics, producing emergent thermodynamic behaviour including temperature equilibration, pressure, and diffusion — all arising from simple pairwise force rules.
 
-The simulator was built as a personal portfolio project to develop practical skills in C++, numerical methods, and computational physics, with direct relevance to quantitative finance and scientific computing.
+The simulator was built as a personal portfolio project to develop practical skills in C++, numerical methods, and computational physics, with direct relevance to scientific computing and memory management.
 
 ---
 
