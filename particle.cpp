@@ -15,6 +15,7 @@ void Particle::draw(sf::RenderWindow& window) {
 
 void Particle::update(float dt){
     velocity.y += GRAVITY;
+
     position += dt * velocity;
     shape.setPosition(position);
 }
@@ -24,24 +25,31 @@ void Particle::checkBounds(float width, float height) {
 
     if (position.x + r * 2 > width) {
         position.x = width - r * 2;
-        velocity.x = 0.f;
+        if (velocity.x > 0.f) {
+            velocity.x = -velocity.x * WALL_RESTITUTION;
+        }
     }
     if (position.x < 0.f) {
         position.x = 0.f;
-        velocity.x = 0.f;
+        if (velocity.x < 0.f) {
+            velocity.x = -velocity.x * WALL_RESTITUTION;
+        }
     }
     if (position.y + r * 2 > height) {
         position.y = height - r * 2;
-        velocity.y = 0.f;
+        if (velocity.y > 0.f) {
+            velocity.y = -velocity.y * WALL_RESTITUTION;
+        }
     }
     if (position.y < 0.f) {
         position.y = 0.f;
-        velocity.y = 0.f;
+        if (velocity.y < 0.f) {
+            velocity.y = -velocity.y * WALL_RESTITUTION;
+        }
     }
     shape.setPosition(position);
 }
 
 void Particle::checkOverlap(){
-
     
 }

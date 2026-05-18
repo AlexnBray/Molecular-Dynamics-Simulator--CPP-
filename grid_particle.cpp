@@ -65,7 +65,7 @@ void neighbourOverlap(std::vector<Particle>& particles, const neighbourVector& n
     }
 
     const float minDistance = static_cast<float>(PARTICLE_RADIUS * 2.0);
-    const float minDistance2 = minDistance * minDistance;           // tiny bounce, mostly damped    // ignore tiny overlap noise
+    const float minDistance2 = minDistance * minDistance;
 
     for (int i = 0; i < n; ++i) {
         for (const int j : neighbours[i]) {

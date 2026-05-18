@@ -16,5 +16,16 @@ std::pair<int, int> cellCoord(const sf::Vector2f& position, float cellSize) {
     };
 }
 
+float randomCoord() {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(-40,40);
+
+    return dist(gen);
+}
+
+
+
+
 
     

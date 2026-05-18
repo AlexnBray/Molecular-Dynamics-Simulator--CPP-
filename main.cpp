@@ -10,11 +10,11 @@ float clickTime(std::chrono::steady_clock::time_point last){
 }
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode({WINDOW_WIDTH, WINDOW_HEIGHT}), "Particle Simulation");
+    sf::RenderWindow window(sf::VideoMode({800, 600}), "Particle Simulation");
     std::vector<Particle> particles;
 
     MyFont.loadFromFile("fonts/AovelSansRounded-rdDL.ttf");
-    sf::Text Text("particles", MyFont, HUD_FONT_SIZE);
+    sf::Text Text("particles", MyFont, 20);
     Text.setFillColor(sf::Color::Black);
     Text.setPosition({10.f, 10.f});
     sf::Clock clock;
@@ -33,24 +33,25 @@ int main() {
         for (auto& p : particles)
             p.update(dt);   
 
-        for (int iter = 0; iter < COLLISION_SOLVER_ITERS; ++iter) { // iterative solver style
+        for (int i = 0; i < 3; ++i) {
             neighbourVector neighbours = buildNeighbourList(particles);
             neighbourOverlap(particles, neighbours);
         }
-            
+            //particle spawn logic
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && clickTime(lastSpawn) >= SPAWN_COOLDOWN_SEC) {
-            count++;
+            count += 10; //check how many particles are spawned
             lastSpawn = std::chrono::steady_clock::now();;
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
             std::cout << "clicked at " << mousePos.x << ", " << mousePos.y << std::endl;
-            particles.emplace_back(mousePos.x, mousePos.y, PARTICLE_RADIUS, randomColour());
+            for (int i=0; i<11; i++)
+                particles.emplace_back(mousePos.x + randomCoord(), mousePos.y + randomCoord(), PARTICLE_RADIUS, randomColour());
         }
 
         window.clear(sf::Color::White);
         Text.setString("Particles: " + std::to_string(count));
         for (auto& p : particles){
             p.draw(window);
-            p.checkBounds(static_cast<float>(WINDOW_WIDTH), static_cast<float>(WINDOW_HEIGHT));
+            p.checkBounds(static_cast<float>(800), static_cast<float>(600));
         }
         window.draw(Text);
         window.display();
