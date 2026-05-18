@@ -4,17 +4,10 @@
         {
             "label": "build and run",
             "type": "shell",
-            "command": "g++",
+            "command": "cmd",
             "args": [
-                "main.cpp",
-                "-o",
-                "main",
-                "-std=c++17",
-                "-lsfml-graphics",
-                "-lsfml-window",
-                "-lsfml-system",
-                "&&",
-                ".\\main.exe"
+                "/c",
+                "g++ main.cpp particle.cpp -o sim -std=c++17 -lsfml-graphics -lsfml-window -lsfml-system && .\\sim.exe"
             ],
             "options": {
                 "cwd": "${workspaceFolder}"
@@ -33,10 +26,7 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe",
-                "-lsfml-graphics",
-                "-lsfml-window",
-                "-lsfml-system"
+                "${fileDirname}\\${fileBasenameNoExtension}.exe"
             ],
             "options": {
                 "cwd": "${fileDirname}"

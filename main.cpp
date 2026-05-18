@@ -1,15 +1,15 @@
 #include <iostream>
 #include "constants.h"
 #include <SFML/Graphics.hpp>
+#include "particles.h"
+#include <vector>
+
+int count {};
 
 int main() {
     sf::RenderWindow window(sf::VideoMode({800, 600}), "Particle Simulation");
 
-    sf::CircleShape particle;
-    sf::Color colour(61,225,189);
-    particle.setRadius(50.f); // radius
-    particle.setFillColor(colour);
-    particle.setPosition({400.f, 300.f}); //coords
+    std::vector<Particle> particles;
 
     while (window.isOpen()) {
         sf::Event event;
@@ -18,8 +18,16 @@ int main() {
                 window.close();
         }
 
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+            count++;
+            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            std::cout << "clicked at " << mousePos.x << ", " << mousePos.y << std::endl;
+            particles.emplace_back(mousePos.x, mousePos.y, 20.f, sf::Color(61, 225, 189));
+        }
+
         window.clear(sf::Color::White);
-        window.draw(particle);
+        for (auto& p : particles)
+            p.draw(window);
         window.display();
     }
 
