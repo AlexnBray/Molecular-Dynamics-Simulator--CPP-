@@ -19,6 +19,7 @@ int main() {
     Text.setPosition({10.f, 10.f});
     sf::Clock clock;
     auto lastSpawn = std::chrono::steady_clock::now();
+    
 
     while (window.isOpen()) {
         sf::Event event;
@@ -37,7 +38,7 @@ int main() {
             lastSpawn = std::chrono::steady_clock::now();;
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
             std::cout << "clicked at " << mousePos.x << ", " << mousePos.y << std::endl;
-            particles.emplace_back(mousePos.x, mousePos.y, 10.f, randomColour());
+            particles.emplace_back(mousePos.x, mousePos.y, PARTICLE_RADIUS, randomColour());
         }
 
         window.clear(sf::Color::White);
@@ -48,6 +49,7 @@ int main() {
         }
         window.draw(Text);
         window.display();
+
 
     }
 
