@@ -19,3 +19,30 @@ void Particle::update(float dt){
     position += dt * velocity;
     shape.setPosition(position);
 }
+
+void Particle::checkBounds(float width, float height) {
+    float r = shape.getRadius();
+
+    if (position.x + r * 2 > width) {
+        position.x = width - r * 2;
+        velocity.x = 0.f;
+    }
+    if (position.x < 0.f) {
+        position.x = 0.f;
+        velocity.x = 0.f;
+    }
+    if (position.y + r * 2 > height) {
+        position.y = height - r * 2;
+        velocity.y = 0.f;
+    }
+    if (position.y < 0.f) {
+        position.y = 0.f;
+        velocity.y = 0.f;
+    }
+    shape.setPosition(position);
+}
+
+void Particle::checkOverlap(){
+
+    
+}

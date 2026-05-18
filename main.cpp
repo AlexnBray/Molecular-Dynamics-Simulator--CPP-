@@ -1,10 +1,4 @@
-#include <iostream>
 #include "constants.h"
-#include <SFML/Graphics.hpp>
-#include "particles.h"
-#include <vector>
-#include <chrono>
-#include <thread>
 
 int count {};
 sf::Font MyFont;
@@ -23,9 +17,8 @@ int main() {
     sf::Text Text("particles", MyFont, 20);
     Text.setFillColor(sf::Color::Black);
     Text.setPosition({10.f, 10.f});
-
-    auto lastSpawn = std::chrono::steady_clock::now();
     sf::Clock clock;
+    auto lastSpawn = std::chrono::steady_clock::now();
 
     while (window.isOpen()) {
         sf::Event event;
@@ -34,24 +27,29 @@ int main() {
                 window.close();
         }
 
+
         float dt = clock.restart().asSeconds();
         for (auto& p : particles)
             p.update(dt);   
-
+            
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && clickTime(lastSpawn) >= 0.05f) {
             count++;
             lastSpawn = std::chrono::steady_clock::now();;
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
             std::cout << "clicked at " << mousePos.x << ", " << mousePos.y << std::endl;
-            particles.emplace_back(mousePos.x, mousePos.y, 20.f, sf::Color(61, 225, 189));
+            particles.emplace_back(mousePos.x, mousePos.y, 10.f, sf::Color(61, 225, 189));
         }
 
         window.clear(sf::Color::White);
         Text.setString("Particles: " + std::to_string(count));
-        for (auto& p : particles)
+        for (auto& p : particles){
             p.draw(window);
+            p.checkBounds(800.f, 600.f);
+        }
         window.draw(Text);
         window.display();
+
+
     }
 
     return 0;
