@@ -1,5 +1,4 @@
 #include "particles.h"
-#include <SFML/Graphics.hpp>
 #include "constants.h"
 
 Particle::Particle(float x, float y, float radius, sf::Color color) {

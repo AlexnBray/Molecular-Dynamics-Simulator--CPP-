@@ -2,6 +2,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "particles.h"
+#include "utils.h"
 #include <vector>
 #include <chrono>
 #include <thread>
