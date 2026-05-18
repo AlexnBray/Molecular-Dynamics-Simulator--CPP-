@@ -25,6 +25,7 @@ int main() {
     Text.setPosition({10.f, 10.f});
 
     auto lastSpawn = std::chrono::steady_clock::now();
+    sf::Clock clock;
 
     while (window.isOpen()) {
         sf::Event event;
@@ -32,6 +33,10 @@ int main() {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+
+        float dt = clock.restart().asSeconds();
+        for (auto& p : particles)
+            p.update(dt);   
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && clickTime(lastSpawn) >= 0.05f) {
             count++;

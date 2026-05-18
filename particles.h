@@ -8,4 +8,5 @@ struct Particle {
 
     Particle(float x, float y, float radius, sf::Color color);
     void draw(sf::RenderWindow& window);
+    void update(float dt);
 };

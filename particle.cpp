@@ -1,5 +1,6 @@
 #include "particles.h"
 #include <SFML/Graphics.hpp>
+#include "constants.h"
 
 Particle::Particle(float x, float y, float radius, sf::Color color) {
     shape.setRadius(radius);
@@ -11,4 +12,10 @@ Particle::Particle(float x, float y, float radius, sf::Color color) {
 
 void Particle::draw(sf::RenderWindow& window) {
     window.draw(shape);
+}
+
+void Particle::update(float dt){
+    velocity.y += GRAVITY;
+    position += dt * velocity;
+    shape.setPosition(position);
 }
