@@ -24,6 +24,17 @@ float randomCoord() {
     return dist(gen);
 }
 
+sf::Vector2f calcDelta(const Particle& particle1, const Particle& particle2){
+    sf::Vector2f delta = particle1.position - particle2.position;
+    return delta;
+}
+
+float calcDistSqr(sf::Vector2f delta) {
+    float dist2 = delta.x * delta.x + delta.y * delta.y;
+    return dist2;
+}
+
+
 
 
 

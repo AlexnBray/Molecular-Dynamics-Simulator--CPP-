@@ -4,6 +4,7 @@
 #include "particles.h"
 #include "utils.h"
 #include "grid_particle.h"
+#include "lj_potential.h"
 #include <vector>
 #include <chrono>
 #include <thread>

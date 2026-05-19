@@ -30,8 +30,8 @@ int main() {
 
 
         float dt = clock.restart().asSeconds();
-        for (auto& p : particles)
-            p.update(dt);   
+        for (auto& p : particles) //auto& references the p without copying it (also allowing for the
+            p.update(dt);   //      compiler to decide what data type it is)
 
         for (int i = 0; i < 3; ++i) {
             neighbourVector neighbours = buildNeighbourList(particles);

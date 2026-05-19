@@ -73,9 +73,7 @@ void neighbourOverlap(std::vector<Particle>& particles, const neighbourVector& n
                 continue;
             }
 
-            sf::Vector2f delta = particles[j].position - particles[i].position;
-            float dist2 = delta.x * delta.x + delta.y * delta.y;
-
+            float dist2 = calcDistSqr(calcDelta(particles[j], particles[i]));
             if (dist2 >= minDistance2) {
                 continue;
             }
@@ -84,7 +82,7 @@ void neighbourOverlap(std::vector<Particle>& particles, const neighbourVector& n
             sf::Vector2f normal;
 
             if (dist > static_cast<float>(EPSILON)) {
-                normal = delta / dist;
+                normal = calcDelta(particles[j], particles[i]) / dist;
             } else {
                 normal = {1.0f, 0.0f};
                 dist = 0.0f;
