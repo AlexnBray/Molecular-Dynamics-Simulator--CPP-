@@ -1,12 +1,15 @@
 #include "constants.h"
 
-int calcLennardJonesPotential(const Particle& particle1, const Particle& particle2){
 
-    double force {};
-    double lj_epsilon;
-    sf::Vector2f delta = calcDelta(particle1, particle2);
+double calcLennardJonesForce(float distSquared) {
+    double sr2  = (LJ_SIGMA * LJ_SIGMA) / distSquared;
+    double sr6  = sr2 * sr2 * sr2;
+    double sr12 = sr6 * sr6;
 
-    force = 24*lj_epsilon;
+    double force = (24.0 * LJ_EPSILON / distSquared) * (2.0 * sr12 - sr6);
 
-    return 0;
+    return force;
 }
+
+//F(r) = (24ε / r²) [ 2(σ/r)¹² - (σ/r)⁶ ]
+//F(r) = (24ε / r²) * ( 2(σ/r)¹² - (σ/r)⁶ )
