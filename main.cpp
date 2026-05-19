@@ -10,13 +10,19 @@ float clickTime(std::chrono::steady_clock::time_point last){
 }
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode({800, 600}), "Particle Simulation");
+    sf::RenderWindow window(sf::VideoMode({1200, 800}), "Particle Simulation");
     std::vector<Particle> particles;
 
     MyFont.loadFromFile("fonts/AovelSansRounded-rdDL.ttf");
     sf::Text Text("particles", MyFont, 20);
     Text.setFillColor(sf::Color::Black);
     Text.setPosition({10.f, 10.f});
+
+    sf::Text gravityText("gravity", MyFont, 20);
+    gravityText.setFillColor(sf::Color::Black);
+    gravityText.setPosition({10.f, 30.f});
+
+
     sf::Clock clock;
     auto lastSpawn = std::chrono::steady_clock::now();
     
@@ -26,18 +32,18 @@ int main() {
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
-
         }
 
+
+        neighbourVector neighbours = buildNeighbourList(particles);
+
+        for (int i = 0; i < 3; ++i) {
+            calcNeighbourInteractions(particles, neighbours);
+        }
 
         float dt = clock.restart().asSeconds();
         for (auto& p : particles) //auto& references the p without copying it (also allowing for the
             p.update(dt);   //      compiler to decide what data type it is)
-
-        for (int i = 0; i < 3; ++i) {
-            neighbourVector neighbours = buildNeighbourList(particles);
-            neighbourOverlap(particles, neighbours);
-        }
             //particle spawn logic
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && clickTime(lastSpawn) >= SPAWN_COOLDOWN_SEC) {
             count += 10; //check how many particles are spawned
@@ -50,11 +56,13 @@ int main() {
 
         window.clear(sf::Color::White);
         Text.setString("Particles: " + std::to_string(count));
+        gravityText.setString("Gravity: " + std::to_string(GRAVITY) + "px/s^2");
         for (auto& p : particles){
             p.draw(window);
-            p.checkBounds(static_cast<float>(800), static_cast<float>(600));
+            p.checkBounds(static_cast<float>(1200), static_cast<float>(800));
         }
         window.draw(Text);
+        window.draw(gravityText);
         window.display();
 
 

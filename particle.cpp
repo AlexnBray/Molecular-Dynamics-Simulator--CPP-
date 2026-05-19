@@ -7,6 +7,7 @@ Particle::Particle(float x, float y, float radius, sf::Color color) {
     shape.setPosition({x, y});
     position = {x, y};
     velocity = {0.f, 0.f};
+    force = {0.f, 0.f};
 }
 
 void Particle::draw(sf::RenderWindow& window) {
@@ -14,7 +15,11 @@ void Particle::draw(sf::RenderWindow& window) {
 }
 
 void Particle::update(float dt){
-    velocity.y += GRAVITY;
+    const sf::Vector2f gravityForce = {0.0f, static_cast<float>(PARTICLE_MASS * GRAVITY)};
+    const sf::Vector2f totalForce = force + gravityForce;
+    const sf::Vector2f acceleration = totalForce / PARTICLE_MASS;
+
+    velocity += acceleration * dt;
 
     position += dt * velocity;
     shape.setPosition(position);
