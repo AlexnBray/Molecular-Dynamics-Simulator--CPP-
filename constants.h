@@ -12,11 +12,11 @@
 
 const double GRAVITY         = 9.80665;
 const double FLOAT_TOLERANCE = 1e-8;
-const double PARTICLE_RADIUS = 10;
+const double PARTICLE_RADIUS = 2;
 const double EPSILON = 1e-8;
 
 // LJ Potential constants (scaled to pixel-sized particles)
-const double LJ_EPSILON      = 50.0;
+const double LJ_EPSILON      = 10.0;
 const double LJ_SIGMA        = PARTICLE_RADIUS * 2.3; // = diameter to mimic pixel-space math
 const double LJ_CUTOFF       = 2.5 * LJ_SIGMA;
 const double COLLISION_CONTACT_RANGE = PARTICLE_RADIUS * 2.0;
