@@ -1,4 +1,5 @@
 #include "constants.h"
+#include <algorithm>
 #include <cmath>
 
 sf::Color randomColour() {
@@ -34,19 +35,30 @@ float calcDistSqr(sf::Vector2f delta) {
     return dist2;
 }
 
+sf::Color gradientCalc(const sf::Color& current_colour, const sf::Color& end_colour, double ratio){
+    ratio = std::clamp(ratio, 0.0, 1.0);
+    const sf::Uint8 red = current_colour.r + (end_colour.r - current_colour.r) * ratio;
+    const sf::Uint8 green = current_colour.g + (end_colour.g - current_colour.g) * ratio;
+    const sf::Uint8 blue = current_colour.b + (end_colour.b - current_colour.b) * ratio;
+
+    return sf::Color(red, green, blue);
+}
+
 
 
 sf::Color velocityToColour(sf::Vector2f velocity) {
-    const double maxVelocitySquared = 131072.0;
+    const double maxVelocitySquared = 1000.0;
     const double velocityMagnitude = calcDistSqr(velocity);
     const double velocityRatio = std::clamp(velocityMagnitude / maxVelocitySquared, 0.0, 1.0);
 
-    if (velocityRatio < 0.1) {
-        return sf::Color(0, 0, 255);
-    }
+    const sf::Color coldBlue(0, 0, 255);
+    const sf::Color lightRed(255, 220, 220);
+    const sf::Color hotRed(255, 0, 0);
 
-    const sf::Uint8 red = static_cast<sf::Uint8>(255.0 * velocityRatio);
-    return sf::Color(red, 0, 0);
+    if (velocityRatio < 0.5) 
+        return gradientCalc(coldBlue, lightRed, velocityRatio / 0.5);
+
+    return gradientCalc(lightRed, hotRed, (velocityRatio - 0.5) / 0.5);
 }
 
 

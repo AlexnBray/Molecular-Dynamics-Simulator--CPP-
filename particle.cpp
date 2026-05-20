@@ -22,6 +22,7 @@ void Particle::update(float dt){
     velocity += acceleration * dt;
 
     position += dt * velocity;
+    shape.setFillColor(velocityToColour(velocity));
     shape.setPosition(position);
 }
 
