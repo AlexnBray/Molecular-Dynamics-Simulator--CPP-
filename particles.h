@@ -6,6 +6,7 @@ struct Particle {
     sf::Vector2f velocity;
     sf::CircleShape shape;
     sf::Vector2f force;
+    double kineticEnergy;
 
 
     Particle(float x, float y, float radius, sf::Color color);

@@ -20,6 +20,7 @@ void Particle::update(float dt){
     const sf::Vector2f acceleration = totalForce / PARTICLE_MASS;
 
     velocity += acceleration * dt;
+    kineticEnergy = 0.5 * PARTICLE_MASS * calcDistSqr(velocity);
     /* -----VELOCITY -----
     𝑣(𝑡+Δ𝑡2)=𝑣(𝑡)+12𝑎(𝑡)   */
    
