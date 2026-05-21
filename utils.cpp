@@ -47,7 +47,7 @@ sf::Color gradientCalc(const sf::Color& current_colour, const sf::Color& end_col
 
 
 sf::Color velocityToColour(sf::Vector2f velocity) {
-    const double maxVelocitySquared = 1000.0;
+    const double maxVelocitySquared = 1250.0;
     const double velocityMagnitude = calcDistSqr(velocity);
     const double velocityRatio = std::clamp(velocityMagnitude / maxVelocitySquared, 0.0, 1.0);
 

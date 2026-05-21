@@ -34,7 +34,6 @@ int main() {
                 window.close();
         }
 
-
         neighbourVector neighbours = buildNeighbourList(particles);
 
         for (int i = 0; i < 3; ++i) {
@@ -59,7 +58,7 @@ int main() {
         gravityText.setString("Gravity: " + std::to_string(GRAVITY) + "px/s^2");
         for (auto& p : particles){
             p.draw(window);
-            p.checkBounds(static_cast<float>(1200), static_cast<float>(800));
+            p.checkBounds(1200, 800);
         }
         window.draw(Text);
         window.draw(gravityText);

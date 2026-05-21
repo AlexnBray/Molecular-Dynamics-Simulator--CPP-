@@ -20,6 +20,15 @@ void Particle::update(float dt){
     const sf::Vector2f acceleration = totalForce / PARTICLE_MASS;
 
     velocity += acceleration * dt;
+    /* -----VELOCITY -----
+    𝑣(𝑡+Δ𝑡2)=𝑣(𝑡)+12𝑎(𝑡)   */
+   
+    /* -----POSITION -----
+    𝑥(𝑡+Δ𝑡)=𝑥(𝑡)+𝑣(𝑡+Δ𝑡2)   */
+
+
+    /* -----POSITION -----
+    v(𝑡+Δ𝑡)=𝑣(𝑡+Δ𝑡2)+1/2* a(𝑡+Δ𝑡2) * Δt */
 
     position += dt * velocity;
     shape.setFillColor(velocityToColour(velocity));

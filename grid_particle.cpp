@@ -99,7 +99,7 @@ void calcNeighbourInteractions(std::vector<Particle>& particles, const neighbour
                     dist   = 0.0f;
                 }
 
-                const float overlap      = minDistance - dist;
+                const float overlap = minDistance - dist;
                 const float correctionMag = std::max(overlap - COLLISION_PENETRATION_SLOP, 0.0f)
                                            * COLLISION_POSITIONAL_PERCENT * 0.5f;
                 const sf::Vector2f correction = normal * correctionMag;
@@ -107,25 +107,25 @@ void calcNeighbourInteractions(std::vector<Particle>& particles, const neighbour
                 particles[i].position -= correction;
                 particles[j].position += correction;
 
-                const sf::Vector2f rv          = particles[j].velocity - particles[i].velocity;
-                const float velAlongNormal     = rv.x * normal.x + rv.y * normal.y;
+                const sf::Vector2f rv = particles[j].velocity - particles[i].velocity;
+                const float velAlongNormal = rv.x * normal.x + rv.y * normal.y;
 
                 if (velAlongNormal < 0.0f) {
-                    const float impulseMag        = -((1.0f + COLLISION_RESTITUTION) * velAlongNormal) * 0.5f;
-                    const sf::Vector2f impulse    = normal * impulseMag;
-                    particles[i].velocity        -= impulse;
-                    particles[j].velocity        += impulse;
+                    const float impulseMag = -((1.0f + COLLISION_RESTITUTION) * velAlongNormal) * 0.5f;
+                    const sf::Vector2f impulse = normal * impulseMag;
+                    particles[i].velocity -= impulse;
+                    particles[j].velocity += impulse;
 
-                    sf::Vector2f tangent          = rv - normal * velAlongNormal;
-                    const float tangentLen2       = tangent.x * tangent.x + tangent.y * tangent.y;
+                    sf::Vector2f tangent = rv - normal * velAlongNormal;
+                    const float tangentLen2 = tangent.x * tangent.x + tangent.y * tangent.y;
                     if (tangentLen2 > static_cast<float>(FLOAT_TOLERANCE)) {
                         tangent /= std::sqrt(tangentLen2);
-                        const float velAlongTangent   = rv.x * tangent.x + rv.y * tangent.y;
-                        float frictionImpulseMag      = -(velAlongTangent) * 0.5f;
-                        const float maxFriction       = impulseMag * COLLISION_FRICTION;
-                        frictionImpulseMag            = std::clamp(frictionImpulseMag, -maxFriction, maxFriction);
-                        particles[i].velocity        -= tangent * frictionImpulseMag;
-                        particles[j].velocity        += tangent * frictionImpulseMag;
+                        const float velAlongTangent= rv.x * tangent.x + rv.y * tangent.y;
+                        float frictionImpulseMag = -(velAlongTangent) * 0.5f;
+                        const float maxFriction = impulseMag * COLLISION_FRICTION;
+                        frictionImpulseMag = std::clamp(frictionImpulseMag, -maxFriction, maxFriction);
+                        particles[i].velocity -= tangent * frictionImpulseMag;
+                        particles[j].velocity += tangent * frictionImpulseMag;
                     }
                 }
 
