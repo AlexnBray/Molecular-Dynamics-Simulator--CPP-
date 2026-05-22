@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "constants.h"
+#include <vector>
+#include "particles.h"
 
-std::vector<int> velvetIntPart(Particle particle, float dt);
+std::vector<sf::Vector2f> velvetIntPart(const Particle& particle, float dt);
+
