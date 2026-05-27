@@ -2,6 +2,7 @@
 A particle-based physics simulation engine built from scratch in C++, implementing the Lennard-Jones potential and Velocity Verlet integration to model the behaviour of interacting particles at a molecular level. Visualised in real-time using SFML.
 
 ---
+https://github.com/user-attachments/assets/c203037e-9d73-4677-a81e-7f5fd4495403
 
 ## Overview
 This project simulates N particles interacting via the Lennard-Jones pair potential, one of the most fundamental models in computational physics and materials science. Particles evolve over time under Newtonian mechanics, producing emergent thermodynamic behaviour including temperature equilibration, pressure, and diffusion — all arising from simple pairwise force rules.
