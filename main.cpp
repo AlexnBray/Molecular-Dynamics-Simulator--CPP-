@@ -49,13 +49,18 @@ int main() {
             lastSpawn = std::chrono::steady_clock::now();;
             sf::Vector2i mousePos = sf::Mouse::getPosition(window);
             std::cout << "clicked at " << mousePos.x << ", " << mousePos.y << std::endl;
-            for (int i=0; i<501; i++)
-                particles.emplace_back(mousePos.x + randomCoord(), mousePos.y + randomCoord(), PARTICLE_RADIUS, randomColour());
+
+            for (int i = 0; i < 501; i++) {
+                sf::Vector2f randomDist = {randomDistributionX(), randomDistributionY()};
+                sf::Vector2f worldcoords = window.mapPixelToCoords(static_cast<sf::Vector2i> (randomDist));
+                particles.emplace_back(worldcoords.x, worldcoords.y, PARTICLE_RADIUS, randomColour());
+            }
         }
+        // std::round(val * 100.0) / 100.0
 
         window.clear(sf::Color::Black);
         Text.setString("Particles: " + std::to_string(count));
-        gravityText.setString("Gravity: " + std::to_string(GRAVITY) + "px/s^2");
+        gravityText.setString("Gravity: " + std::to_string(std::round(GRAVITY * 100.0)/100.0) + "px/s^2");
         for (auto& p : particles){
             p.draw(window);
             p.checkBounds(1200, 800);

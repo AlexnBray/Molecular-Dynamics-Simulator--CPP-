@@ -25,6 +25,22 @@ float randomCoord() {
     return dist(gen);
 }
 
+float randomDistributionX() { // 1200
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(50.0, 1150.0);
+
+    return dist(gen);
+}
+
+float randomDistributionY() { // 800
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dist(20.0, 600.0);
+
+    return dist(gen);
+}
+
 sf::Vector2f calcDelta(const Particle& particle1, const Particle& particle2){
     sf::Vector2f delta = particle1.position - particle2.position;
     return delta;
