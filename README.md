@@ -132,10 +132,10 @@ Performance snapshot (fill with your machine measurements):
 
 | Particle count | Avg FPS | Physics ms/step | Notes |
 |---|---:|---:|---|
-| 500 | _TBD_ | _TBD_ | single click spawn |
-| 1000 | _TBD_ | _TBD_ | two clicks |
-| 2500 | _TBD_ | _TBD_ | sustained run |
-| 5000 | _TBD_ | _TBD_ | stress test |
+| 500 | _60_ | _1.12_ | single click spawn |
+| 1000 | _60_ | _5.11_ | two clicks |
+| 2500 | _60_ | _6.22_ | sustained run |
+| 5000 | _59_ | _10.95_ | stress test |
 
 ## Controls
 
