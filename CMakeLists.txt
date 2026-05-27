@@ -36,6 +36,7 @@ set(SIM_SOURCES
     grid_particle.cpp
     lj_potential.cpp
     velocity_velvet_int.cpp
+    hud_overlay.cpp
 )
 
 set(SIM_HEADERS
@@ -45,6 +46,7 @@ set(SIM_HEADERS
     include/grid_particle.h
     include/lj_potential.h
     include/velocity_velvet_int.h
+    include/hud_overlay.h
 )
 
 # ---- Main executable ----

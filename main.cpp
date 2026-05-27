@@ -1,4 +1,5 @@
 #include "constants.h"
+#include "hud_overlay.h"
 
 int count {};
 sf::Font MyFont;
@@ -9,23 +10,57 @@ float clickTime(std::chrono::steady_clock::time_point last){
     return elapsed;
 }
 
+double computeLJPotentialEnergy(const std::vector<Particle>& particles, const neighbourVector& neighbours) {
+    double totalPotential = 0.0;
+    const int n = static_cast<int>(particles.size());
+    if (static_cast<int>(neighbours.size()) != n) {
+        return totalPotential;
+    }
+
+    for (int i = 0; i < n; ++i) {
+        for (const int j : neighbours[i]) {
+            if (j <= i || j < 0 || j >= n) {
+                continue;
+            }
+
+            const sf::Vector2f delta = particles[j].position - particles[i].position;
+            const double dist2 = static_cast<double>(delta.x * delta.x + delta.y * delta.y);
+            if (dist2 <= FLOAT_TOLERANCE || dist2 >= LJ_CUTOFF2) {
+                continue;
+            }
+
+            const double sr2 = (LJ_SIGMA * LJ_SIGMA) / dist2;
+            const double sr6 = sr2 * sr2 * sr2;
+            const double sr12 = sr6 * sr6;
+            totalPotential += 4.0 * LJ_EPSILON * (sr12 - sr6);
+        }
+    }
+
+    return totalPotential;
+}
+
 int main() {
-    sf::RenderWindow window(sf::VideoMode({1200, 800}), "Particle Simulation");
+    sf::RenderWindow window(sf::VideoMode({static_cast<unsigned int>(windowWidth), static_cast<unsigned int>(windowHeight)}), "Particle Simulation");
     std::vector<Particle> particles;
     window.setFramerateLimit(60);
 
-    MyFont.loadFromFile("fonts/AovelSansRounded-rdDL.ttf");
-    sf::Text Text("particles", MyFont, 20);
-    Text.setFillColor(sf::Color::White);
-    Text.setPosition({10.f, 10.f});
+    sf::RectangleShape simBox({simWidth, simHeight});
+    simBox.setPosition({0.0f, 0.0f});
+    simBox.setFillColor(sf::Color::Black);
+    simBox.setOutlineColor(sf::Color(70, 70, 70));
+    simBox.setOutlineThickness(1.0f);
 
-    sf::Text gravityText("gravity", MyFont, 20);
-    gravityText.setFillColor(sf::Color::White);
-    gravityText.setPosition({10.f, 30.f});
+    MyFont.loadFromFile("fonts/AovelSansRounded-rdDL.ttf");
+    HudOverlay hud(MyFont);
 
 
     constexpr float fixedDt = 1.0f / 60.0f;
     float accumulator = 0.0f;
+    float fpsRolling = 60.0f;
+    float physicsStepMs = 0.0f;
+    double totalKineticEnergy = 0.0;
+    double totalLJPotentialEnergy = 0.0;
+    neighbourVector latestNeighbours;
 
     sf::Clock clock;
     auto lastSpawn = std::chrono::steady_clock::now();
@@ -39,12 +74,20 @@ int main() {
         }
 
 
-        accumulator += clock.restart().asSeconds();
+        const float frameSeconds = clock.restart().asSeconds();
+        if (frameSeconds > 0.0f) {
+            const float fpsInstant = 1.0f / frameSeconds;
+            fpsRolling = fpsRolling * 0.9f + fpsInstant * 0.1f;
+        }
+
+        accumulator += frameSeconds;
 
         if (accumulator > 0.25f) accumulator = 0.25f;
 
+        const auto physicsStart = std::chrono::steady_clock::now();
         while (accumulator >= fixedDt) {
             neighbourVector neighbours = buildNeighbourList(particles);
+            latestNeighbours = neighbours;
 
             for (int i = 0; i < 3; ++i) {
                 calcNeighbourInteractions(particles, neighbours);
@@ -54,35 +97,47 @@ int main() {
                 p.update(fixedDt);
 
             for (auto& p : particles)
-                p.checkBounds(1200, 800);
+                p.checkBounds(simWidth, simHeight);
 
             accumulator -= fixedDt;
         }
+        const auto physicsEnd = std::chrono::steady_clock::now();
+        physicsStepMs = std::chrono::duration<float, std::milli>(physicsEnd - physicsStart).count();
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && clickTime(lastSpawn) >= SPAWN_COOLDOWN_SEC) {
+            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+            if (mousePos.x >= 0 && mousePos.x < simWidth && mousePos.y >= 0 && mousePos.y < simHeight) {
             count += 500;
             lastSpawn = std::chrono::steady_clock::now();
-            sf::Vector2i mousePos = sf::Mouse::getPosition(window);
             std::cout << "clicked at " << mousePos.x << ", " << mousePos.y << std::endl;
 
             for (int i = 0; i < 501; i++) {
                 sf::Vector2f randomDist = {randomDistributionX(), randomDistributionY()};
                 sf::Vector2f worldcoords = window.mapPixelToCoords(static_cast<sf::Vector2i>(randomDist));
-                particles.emplace_back(worldcoords.x, worldcoords.y, PARTICLE_RADIUS, randomColour());
+                if (worldcoords.x >= 0.0f && worldcoords.x < simWidth && worldcoords.y >= 0.0f && worldcoords.y < simHeight) {
+                    particles.emplace_back(worldcoords.x, worldcoords.y, PARTICLE_RADIUS, randomColour());
+                }
+            }
             }
         }
 
+        totalKineticEnergy = 0.0;
+        for (const auto& p : particles) {
+            totalKineticEnergy += p.kineticEnergy;
+        }
+        totalLJPotentialEnergy = computeLJPotentialEnergy(particles, latestNeighbours);
+
         window.clear(sf::Color::Black);
-        Text.setString("Particles: " + std::to_string(count));
-        gravityText.setString("Gravity: " + std::to_string(std::round(GRAVITY * 100.0) / 100.0) + "px/s^2");
+        window.draw(simBox);
+        hud.update(count, GRAVITY, fpsRolling, physicsStepMs, totalKineticEnergy, totalLJPotentialEnergy);
 
         for (auto& p : particles)
             p.draw(window);
 
-        window.draw(Text);
-        window.draw(gravityText);
+        hud.draw(window);
         window.display();
     }
 
     return 0;
+
 }

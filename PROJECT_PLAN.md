@@ -28,48 +28,6 @@ Missing for resume-grade:
 
 These are non-negotiable for the project to read as "engineered" instead of "scripted."
 
-### 1.1 — Switch to CMake build ✅
-
-- **What:** Replace the `g++ ...` task with a `CMakeLists.txt` that finds SFML, builds the sim, and supports `Debug`/`Release` profiles.
-- **Why:** A reviewer cloning the repo on Linux/macOS can't run a Windows `g++` command. CMake is table stakes for any serious C++ project.
-- **Where:** `CMakeLists.txt` at project root; `.vscode/tasks.json` now drives CMake.
-- **Effort:** Done.
-
-**To build and run:**
-
-```bash
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-cmake --build build --parallel
-./build/bin/sim          # Linux/macOS
-.\build\bin\sim.exe      # Windows
-```
-
-**Dependency install (one-time):**
-
-- Linux:   `sudo apt install libsfml-dev cmake`
-- macOS:   `brew install sfml cmake`
-- Windows (MSYS2 UCRT64): `pacman -S mingw-w64-ucrt-x86_64-sfml mingw-w64-ucrt-x86_64-cmake`
-
-### 1.2 — Fixed-timestep simulation loop
-
-- **What:** Replace `dt = clock.restart()` with an accumulator pattern. Physics runs at a fixed `dt` (e.g. 1/120 s), rendering runs as fast as it can, leftover time accumulates.
-- **Why:** Your current loop is frame-rate dependent. Verlet's accuracy depends on a stable `dt`. This is the single most important physics fix.
-- **Where:** `main.cpp` main loop.
-- **Effort:** ~40 LOC.
-
-```cpp
-// Reference pattern
-const float fixedDt = 1.0f / 120.0f;
-float accumulator = 0.0f;
-while (window.isOpen()) {
-    accumulator += clock.restart().asSeconds();
-    while (accumulator >= fixedDt) {
-        simulation.step(fixedDt);
-        accumulator -= fixedDt;
-    }
-    render();
-}
-```
 
 ### 1.3 — Extract `Simulation` and `App` classes
 

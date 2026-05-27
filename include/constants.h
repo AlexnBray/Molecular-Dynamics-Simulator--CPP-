@@ -41,3 +41,11 @@ constexpr  float COLLISION_FRICTION = 0.04f;
 
 // Wall constants
 constexpr  float WALL_RESTITUTION = 0.7f;
+
+constexpr float simWidth        = 1200.0f;
+constexpr float simHeight       = 800.0f;
+constexpr float hudWidth        = 300.0f;
+constexpr float bottomHudHeight = 170.0f;
+constexpr float windowWidth     = simWidth + hudWidth;
+constexpr float windowHeight    = 970.0f;
+
