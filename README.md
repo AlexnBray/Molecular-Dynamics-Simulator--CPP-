@@ -1,5 +1,7 @@
 # Molecular Dynamics Simulator (C++/SFML)
 
+[![Build](https://github.com/AlexnBray/Molecular-Dynamics-Simulator---C-/actions/workflows/build.yml/badge.svg)](https://github.com/AlexnBray/Molecular-Dynamics-Simulator---C-/actions/workflows/build.yml)
+
 This project is a real-time 2D molecular dynamics sandbox written in modern C++, where hundreds to thousands of particles interact through a Lennard-Jones (LJ) force model, resolve near-field overlap with impulse-style collision handling, and advance with fixed-step Verlet-style integration for stable simulation timing; the result is an interactive desktop simulation that demonstrates physics modeling, numerical integration, spatial partitioning, and rendering/HUD engineering in a compact, readable codebase.
 
 ## Demo
@@ -120,15 +122,6 @@ Notes:
 ## Performance
 
 The app is frame-limited to `60 FPS` and exposes rolling FPS and physics step time in the HUD.
-
-Current benchmark protocol (recommended):
-
-1. Build `Release`
-2. Launch app and spawn particles in batches (left click)
-3. Let each particle count settle for ~10 seconds
-4. Record average FPS from HUD and physics step time
-
-Performance snapshot (fill with your machine measurements):
 
 | Particle count | Avg FPS | Physics ms/step | Notes |
 |---|---:|---:|---|
