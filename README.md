@@ -145,10 +145,6 @@ Performance snapshot (fill with your machine measurements):
 - Left mouse click in simulation area: spawn ~500 particles
 - Close window: exit
 
-## Roadmap
-
-- Project plan: [`PROJECT_PLAN.md`](PROJECT_PLAN.md)
-
 ## References
 
 - Rapaport, D.C. *The Art of Molecular Dynamics Simulation* (2nd ed.)

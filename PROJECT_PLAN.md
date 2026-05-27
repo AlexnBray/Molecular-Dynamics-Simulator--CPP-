@@ -85,18 +85,6 @@ These are non-negotiable for the project to read as "engineered" instead of "scr
 - **Where:** New `config.h/cpp`, library: `toml++` or `nlohmann::json`.
 - **Effort:** ~100 LOC.
 
-### 2.3 — Metrics overlay (HUD upgrade)
-
-- **What:** Replace current 2-line HUD with:
-  - FPS (rolling avg)
-  - Particle count
-  - Physics step time (ms)
-  - Total system kinetic energy
-  - Total LJ potential energy
-  - Optional: line graph of energy over time
-- **Why:** Demonstrates instrumentation. Energy conservation is *the* validation metric for an MD sim — showing it visibly proves your integrator works.
-- **Where:** `app.cpp` (HUD), `simulation.cpp` (metrics computation).
-- **Effort:** ~80 LOC.
 
 ### 2.4 — Pause / single-step / reset controls
 

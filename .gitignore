@@ -23,6 +23,7 @@ Release/
 
 # CMake artifacts (in case they escape build/)
 CMakeCache.txt
+PROJECT_PLAN.md
 CMakeFiles/
 cmake_install.cmake
 CMakeUserPresets.json
