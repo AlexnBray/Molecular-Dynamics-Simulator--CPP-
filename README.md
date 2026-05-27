@@ -4,10 +4,7 @@ This project is a real-time 2D molecular dynamics sandbox written in modern C++,
 
 ## Demo
 
-![Simulation Demo](docs/demo.gif)
-
-- If `docs/demo.gif` is not present yet, record one with ScreenToGif (or similar) and save it at that path.
-- Existing capture link (temporary): [video capture](https://github.com/user-attachments/assets/c203037e-9d73-4677-a81e-7f5fd4495403)
+https://github.com/user-attachments/assets/c203037e-9d73-4677-a81e-7f5fd4495403
 
 ## Features
 
@@ -135,10 +132,10 @@ Performance snapshot (fill with your machine measurements):
 
 | Particle count | Avg FPS | Physics ms/step | Notes |
 |---|---:|---:|---|
-| 500 | _TBD_ | _TBD_ | single click spawn |
-| 1000 | _TBD_ | _TBD_ | two clicks |
-| 2500 | _TBD_ | _TBD_ | sustained run |
-| 5000 | _TBD_ | _TBD_ | stress test |
+| 500 | _60_ | _1.12_ | single click spawn |
+| 1000 | _60_ | _5.11_ | two clicks |
+| 2500 | _60_ | _6.22_ | sustained run |
+| 5000 | _59_ | _10.95_ | stress test |
 
 ## Controls
 
