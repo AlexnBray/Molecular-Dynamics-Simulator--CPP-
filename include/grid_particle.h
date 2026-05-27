@@ -7,4 +7,3 @@ using neighbourVector = std::vector<std::vector<int>>;
 
 neighbourVector buildNeighbourList(const std::vector<Particle>& particles);
 void calcNeighbourInteractions(std::vector<Particle>& particles, const neighbourVector& neighbours);
-

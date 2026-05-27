@@ -39,12 +39,12 @@ set(SIM_SOURCES
 )
 
 set(SIM_HEADERS
-    constants.h
-    particles.h
-    utils.h
-    grid_particle.h
-    lj_potential.h
-    velocity_velvet_int.h
+    include/constants.h
+    include/particles.h
+    include/utils.h
+    include/grid_particle.h
+    include/lj_potential.h
+    include/velocity_velvet_int.h
 )
 
 # ---- Main executable ----
@@ -57,7 +57,7 @@ target_link_libraries(sim PRIVATE
 )
 
 target_include_directories(sim PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
 # ---- Compiler warnings ----
