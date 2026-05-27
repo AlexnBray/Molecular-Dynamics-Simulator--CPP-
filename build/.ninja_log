@@ -1,8 +1,0 @@
-# ninja log v7
-38	863	8015864731257357	CMakeFiles/sim.dir/lj_potential.cpp.obj	c2dde99d21d8f438
-14	885	8015864730994365	CMakeFiles/sim.dir/particle.cpp.obj	2e55800bf30ec77e
-43	927	8015864731307341	CMakeFiles/sim.dir/velocity_velvet_int.cpp.obj	9eda4b282e556af6
-21	977	8015864731086556	CMakeFiles/sim.dir/utils.cpp.obj	8871e96a2d2727c7
-10	1088	8015864730923316	CMakeFiles/sim.dir/main.cpp.obj	29b7627f6a4e142c
-30	1102	8015864731181827	CMakeFiles/sim.dir/grid_particle.cpp.obj	da6291367ccc0036
-1102	1412	8015864741861703	bin/sim.exe	618e8492c8c6a2e1
