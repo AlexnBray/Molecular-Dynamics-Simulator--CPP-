@@ -4,10 +4,7 @@ This project is a real-time 2D molecular dynamics sandbox written in modern C++,
 
 ## Demo
 
-![Simulation Demo](docs/demo.gif)
-
-- If `docs/demo.gif` is not present yet, record one with ScreenToGif (or similar) and save it at that path.
-- Existing capture link (temporary): [video capture](https://github.com/user-attachments/assets/c203037e-9d73-4677-a81e-7f5fd4495403)
+https://github.com/user-attachments/assets/c203037e-9d73-4677-a81e-7f5fd4495403
 
 ## Features
 
