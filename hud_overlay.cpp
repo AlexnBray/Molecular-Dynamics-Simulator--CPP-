@@ -49,6 +49,8 @@ HudOverlay::HudOverlay(const sf::Font& font)
     ljText_.setPosition({left, top + row * 5.0f});
 }
 
+//import clear button here
+
 void HudOverlay::update(int particleCount, double gravity, float fps, float physicsMs, double kineticEnergy, double ljEnergy) {
     particlesText_.setString("Particles: " + std::to_string(particleCount));
     gravityText_.setString("Gravity: " + std::to_string(std::round(gravity * 100.0) / 100.0) + "px/s^2");

@@ -1,14 +1,7 @@
 #include "constants.h"
-#include "hud_overlay.h"
 
 int count {};
 sf::Font MyFont;
-
-float clickTime(std::chrono::steady_clock::time_point last){
-    auto now = std::chrono::steady_clock::now();
-    float elapsed = std::chrono::duration<float>(now - last).count();
-    return elapsed;
-}
 
 double computeLJPotentialEnergy(const std::vector<Particle>& particles, const neighbourVector& neighbours) {
     double totalPotential = 0.0;
@@ -52,7 +45,8 @@ int main() {
 
     MyFont.loadFromFile("fonts/AovelSansRounded-rdDL.ttf");
     HudOverlay hud(MyFont);
-
+    
+    bool isPaused = false;
 
     constexpr float fixedDt = 1.0f / 60.0f;
     float accumulator = 0.0f;

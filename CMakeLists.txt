@@ -62,6 +62,39 @@ target_include_directories(sim PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
+# ---- Tests ----
+enable_testing()
+
+add_executable(physics_primitives_tests
+    tests/test_physics.cpp
+    particle.cpp
+    utils.cpp
+    lj_potential.cpp
+    velocity_velvet_int.cpp
+)
+
+target_include_directories(physics_primitives_tests PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+)
+
+target_link_libraries(physics_primitives_tests PRIVATE
+    sfml-graphics
+    sfml-window
+    sfml-system
+)
+
+if(MSVC)
+    target_compile_options(physics_primitives_tests PRIVATE /W4 /permissive-)
+else()
+    target_compile_options(physics_primitives_tests PRIVATE
+        -Wall
+        -Wextra
+        -Wpedantic
+    )
+endif()
+
+add_test(NAME physics_primitives COMMAND physics_primitives_tests)
+
 # ---- Compiler warnings ----
 if(MSVC)
     target_compile_options(sim PRIVATE /W4 /permissive-)

@@ -25,6 +25,12 @@ float randomCoord() {
     return dist(gen);
 }
 
+float clickTime(std::chrono::steady_clock::time_point last){
+    auto now = std::chrono::steady_clock::now();
+    float elapsed = std::chrono::duration<float>(now - last).count();
+    return elapsed;
+}
+
 float randomDistributionX() { // 1200
     std::random_device rd;
     std::mt19937 gen(rd());

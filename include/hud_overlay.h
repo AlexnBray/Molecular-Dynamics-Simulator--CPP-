@@ -22,3 +22,12 @@ private:
     std::deque<float> energyHistory_;
     std::size_t graphMaxSamples_;
 };
+
+class Button {
+public: 
+    explicit Button(const sf::Font& font);
+    void draw(sf::RenderWindow& window) const;
+
+private:
+    sf::Text buttonText;
+};

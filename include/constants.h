@@ -6,6 +6,7 @@
 #include "grid_particle.h"
 #include "lj_potential.h"
 #include "velocity_velvet_int.h"
+#include "hud_overlay.h"
 #include <cmath>
 #include <vector>
 #include <chrono>
