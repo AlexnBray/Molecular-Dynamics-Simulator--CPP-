@@ -55,9 +55,6 @@ void testVerletPrimitiveOneParticleDrop() {
         p.position = state[1];
     }
 
-    // Current velvetIntPart behaves as semi-implicit Euler:
-    // v_n = n*g*dt
-    // y_n = g*dt^2 * n*(n+1)/2
     const double expectedVy = steps * GRAVITY * dt;
     const double expectedY = GRAVITY * dt * dt * (steps * (steps + 1) / 2.0);
 
@@ -82,7 +79,7 @@ void testWallReflectionEnergyScaling() {
           "Wall bounce kinetic energy ratio should be restitution^2");
 }
 
-} // namespace
+}
 
 int main() {
     testDistanceHelpers();
