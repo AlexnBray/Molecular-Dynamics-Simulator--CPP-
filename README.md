@@ -5,7 +5,7 @@
 This project is a 2D molecular dynamics sandbox written in modern C++, where hundreds to thousands of particles interact through a Lennard-Jones (LJ) force model, resolve near-field overlap with impulse-style collision handling, and advance with fixed-step Verlet-style integration for stable simulation timing; the result is an interactive desktop simulation that demonstrates physics modeling, numerical integration, spatial partitioning, and rendering/HUD engineering in a compact, readable codebase.
 
 ## Why did I do this?
-This was a personal project that I decided to create to learn about both C++ optimisation properly and computer-aided physics simulations.
+This was a personal project to learn more about C++ optimisation and computer-aided physics simulation. 
 - if something's slow, you see it in the HUD straight away so this was a great way to visually track how code changes and computation refactors actually affected the performance.
 - Verlet integration and Lennard-Jones forces are simple on paper but less obvious once particles start exploding off screen at frame one.
 
