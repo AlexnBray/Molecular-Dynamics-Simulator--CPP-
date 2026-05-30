@@ -45,7 +45,6 @@ int main() {
 
     MyFont.loadFromFile("fonts/AovelSansRounded-rdDL.ttf");
     HudOverlay hud(MyFont);
-    
 
     constexpr float fixedDt = 1.0f / 60.0f;
     float accumulator = 0.0f;
