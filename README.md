@@ -2,7 +2,12 @@
 
 [![Build](https://github.com/AlexnBray/Molecular-Dynamics-Simulator---C-/actions/workflows/build.yml/badge.svg)](https://github.com/AlexnBray/Molecular-Dynamics-Simulator---C-/actions/workflows/build.yml)
 
-This project is a real-time 2D molecular dynamics sandbox written in modern C++, where hundreds to thousands of particles interact through a Lennard-Jones (LJ) force model, resolve near-field overlap with impulse-style collision handling, and advance with fixed-step Verlet-style integration for stable simulation timing; the result is an interactive desktop simulation that demonstrates physics modeling, numerical integration, spatial partitioning, and rendering/HUD engineering in a compact, readable codebase.
+This project is a 2D molecular dynamics sandbox written in modern C++, where hundreds to thousands of particles interact through a Lennard-Jones (LJ) force model, resolve near-field overlap with impulse-style collision handling, and advance with fixed-step Verlet-style integration for stable simulation timing; the result is an interactive desktop simulation that demonstrates physics modeling, numerical integration, spatial partitioning, and rendering/HUD engineering in a compact, readable codebase.
+
+## Why did I do this?
+This was a personal project to learn more about C++ optimisation and computer-aided physics simulation. 
+- if something's slow, you see it in the HUD straight away so this was a great way to visually track how code changes and computation refactors actually affected the performance.
+- Verlet integration and Lennard-Jones forces are simple on paper but less obvious once particles start exploding off screen at frame one.
 
 ## Demo
 
@@ -10,7 +15,7 @@ https://github.com/user-attachments/assets/c203037e-9d73-4677-a81e-7f5fd4495403
 
 ## Features
 
-- Real-time particle simulation with a fixed physics timestep (`1/60 s`)
+- Particle simulation with a fixed physics timestep (`1/60 s`)
 - Lennard-Jones pair-force interactions with cutoff and neighbor list acceleration
 - Spatial grid hashing for near-`O(n)` neighborhood candidate generation
 - Wall bounds and overlap/collision response with restitution + friction terms
@@ -73,6 +78,9 @@ main.cpp
   ├─ Particle::checkBounds(...)       [particle.cpp]
   └─ HudOverlay::update/draw(...)     [hud_overlay.cpp]
 ```
+
+<img width="1016" height="600" alt="Image" src="https://github.com/user-attachments/assets/7c90fe84-4770-4712-aba9-dfdeb0922ff0" />
+(Github doesn't render this image great, click on it for a better view)
 
 Simulation/UI layout:
 
