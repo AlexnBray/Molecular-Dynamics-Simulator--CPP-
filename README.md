@@ -80,6 +80,7 @@ main.cpp
 ```
 
 <img width="1016" height="600" alt="Image" src="https://github.com/user-attachments/assets/7c90fe84-4770-4712-aba9-dfdeb0922ff0" />
+(Github doesn't render this image great, click on it for a better view)
 
 Simulation/UI layout:
 
