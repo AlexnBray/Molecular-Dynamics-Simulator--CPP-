@@ -79,7 +79,7 @@ main.cpp
   └─ HudOverlay::update/draw(...)     [hud_overlay.cpp]
 ```
 
-<img width="508" height="250" alt="Image" src="https://github.com/user-attachments/assets/7c90fe84-4770-4712-aba9-dfdeb0922ff0" />
+<img width="1016" height="500" alt="Image" src="https://github.com/user-attachments/assets/7c90fe84-4770-4712-aba9-dfdeb0922ff0" />
 
 Simulation/UI layout:
 
