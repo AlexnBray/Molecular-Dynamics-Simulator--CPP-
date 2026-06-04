@@ -15,7 +15,7 @@ https://github.com/user-attachments/assets/c203037e-9d73-4677-a81e-7f5fd4495403
 
 ## Features
 
-- Real-time particle simulation with a fixed physics timestep (`1/60 s`)
+- Particle simulation with a fixed physics timestep (`1/60 s`)
 - Lennard-Jones pair-force interactions with cutoff and neighbor list acceleration
 - Spatial grid hashing for near-`O(n)` neighborhood candidate generation
 - Wall bounds and overlap/collision response with restitution + friction terms
