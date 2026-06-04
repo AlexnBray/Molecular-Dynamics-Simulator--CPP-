@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile version="21.1.2">
+  <diagram id="md-sim-arch" name="Architecture">
+    <mxGraphModel dx="1600" dy="900" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1700" pageHeight="960" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="Molecular Dynamics Simulation - System Architecture"
+          style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#1a1a2e;"
+          vertex="1" parent="1">
+          <mxGeometry x="250" y="14" width="900" height="44" as="geometry" />
+        </mxCell>
+
+        <!-- ================== LAYER BACKGROUNDS ================== -->
+
+        <mxCell id="bg_infra" value="Shared Infrastructure"
+          style="swimlane;startSize=24;fillColor=#fff9db;strokeColor=#d6b656;fontStyle=1;fontSize=11;swimlaneLine=1;rounded=1;arcSize=4;"
+          vertex="1" parent="1">
+          <mxGeometry x="20" y="68" width="1380" height="152" as="geometry" />
+        </mxCell>
+
+        <mxCell id="bg_physics" value="Physics Engine"
+          style="swimlane;startSize=24;fillColor=#fff4e8;strokeColor=#d79b00;fontStyle=1;fontSize=11;swimlaneLine=1;rounded=1;arcSize=4;"
+          vertex="1" parent="1">
+          <mxGeometry x="20" y="238" width="780" height="320" as="geometry" />
+        </mxCell>
+
+        <mxCell id="bg_particle" value="Particle"
+          style="swimlane;startSize=24;fillColor=#edf7ed;strokeColor=#82b366;fontStyle=1;fontSize=11;swimlaneLine=1;rounded=1;arcSize=4;"
+          vertex="1" parent="1">
+          <mxGeometry x="818" y="238" width="280" height="320" as="geometry" />
+        </mxCell>
+
+        <mxCell id="bg_render" value="Rendering / HUD"
+          style="swimlane;startSize=24;fillColor=#f5f5f5;strokeColor=#666666;fontStyle=1;fontSize=11;swimlaneLine=1;rounded=1;arcSize=4;"
+          vertex="1" parent="1">
+          <mxGeometry x="1116" y="238" width="284" height="320" as="geometry" />
+        </mxCell>
+
+        <mxCell id="bg_build" value="Build and Tests"
+          style="swimlane;startSize=24;fillColor=#f3e5f5;strokeColor=#7b1fa2;fontStyle=1;fontSize=11;swimlaneLine=1;rounded=1;arcSize=4;"
+          vertex="1" parent="1">
+          <mxGeometry x="20" y="576" width="1380" height="140" as="geometry" />
+        </mxCell>
+
+        <!-- ================== CONSTANTS.H ================== -->
+        <mxCell id="constants" value="constants.h - Centralised Configuration"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacingLeft=10;verticalAlign=top;fontStyle=1;"
+          vertex="1" parent="bg_infra">
+          <mxGeometry x="20" y="36" width="260" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="constants_detail" value="GRAVITY = 9.80665&#xa;PARTICLE_RADIUS = 5  |  PARTICLE_MASS = 1&#xa;LJ_EPSILON = 10  |  LJ_SIGMA = 2.3 * r&#xa;LJ_CUTOFF = 2.5 * sigma&#xa;SKIN_RADIUS = max(LJ_CUTOFF, 2r) * 1.2&#xa;COLLISION_RESTITUTION = 0.65  |  FRICTION = 0.04&#xa;simWidth=1200  simHeight=800  windowWidth=1500"
+          style="text;html=0;strokeColor=none;fillColor=none;fontSize=10;align=left;verticalAlign=top;spacingLeft=4;"
+          vertex="1" parent="bg_infra">
+          <mxGeometry x="20" y="36" width="260" height="104" as="geometry" />
+        </mxCell>
+
+        <!-- main.cpp in infra band -->
+        <mxCell id="main" value="main.cpp - Application Orchestrator"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=10;verticalAlign=top;fontStyle=1;"
+          vertex="1" parent="bg_infra">
+          <mxGeometry x="300" y="36" width="760" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="main_detail" value="Fixed-timestep loop: fixedDt = 1/60 s, accumulator pattern, cap at 250 ms&#xa;Event handling (close, pause)   |   Mouse-click spawn: 500 particles per click&#xa;Physics tick: buildNeighbourList -> calcNeighbourInteractions x3 -> p.update -> p.checkBounds&#xa;Metrics: rolling FPS, chrono physics-step ms, totalKineticEnergy, totalLJPotentialEnergy&#xa;Render: window.clear -> simBox -> particles -> hud.draw -> window.display"
+          style="text;html=0;strokeColor=none;fillColor=none;fontSize=10;align=left;verticalAlign=top;spacingLeft=4;"
+          vertex="1" parent="bg_infra">
+          <mxGeometry x="300" y="36" width="760" height="104" as="geometry" />
+        </mxCell>
+
+        <!-- utils.cpp in infra band -->
+        <mxCell id="utils" value="utils.cpp - Shared Helpers"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e0f7fa;strokeColor=#006064;fontSize=11;align=left;spacingLeft=10;verticalAlign=top;fontStyle=1;"
+          vertex="1" parent="bg_infra">
+          <mxGeometry x="1080" y="36" width="280" height="104" as="geometry" />
+        </mxCell>
+        <mxCell id="utils_detail" value="cellCoord(pos, cellSize) -&gt; (cx, cy)&#xa;velocityToColour()  blue -&gt; white -&gt; red&#xa;gradientCalc()  lerp sf::Color&#xa;clickTime()  spawn cooldown (chrono)&#xa;randomDistributionX/Y()&#xa;calcDistSqr()  |  calcDelta()"
+          style="text;html=0;strokeColor=none;fillColor=none;fontSize=10;align=left;verticalAlign=top;spacingLeft=4;"
+          vertex="1" parent="bg_infra">
+          <mxGeometry x="1080" y="36" width="280" height="104" as="geometry" />
+        </mxCell>
+
+        <!-- ================== PHYSICS LAYER ================== -->
+
+        <!-- grid_particle.cpp -->
+        <mxCell id="grid" value="grid_particle.cpp - Spatial Physics"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=left;spacingLeft=10;verticalAlign=top;fontStyle=1;"
+          vertex="1" parent="bg_physics">
+          <mxGeometry x="20" y="36" width="360" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="grid_detail" value="buildNeighbourList()  O(n) average&#xa;  - Uniform grid via unordered_map&#xa;  - Cell key = (cx &lt;&lt; 32) XOR cy  (64-bit)&#xa;  - Bucket each particle into one cell&#xa;  - 3x3 cell neighbourhood probe&#xa;  - SKIN_RADIUS^2 distance filter&#xa;  - Returns: neighbourVector&#xa;&#xa;calcNeighbourInteractions()&#xa;  - Reset all forces to zero&#xa;  - LJ force: repulsive r&lt;sigma, attractive r&gt;sigma&#xa;  - Hard-sphere collision:&#xa;      positional correction (80%, slop 0.01)&#xa;      velocity impulse (restitution 0.65)&#xa;      tangential friction (4% of normal)"
+          style="text;html=0;strokeColor=none;fillColor=none;fontSize=10;align=left;verticalAlign=top;spacingLeft=4;"
+          vertex="1" parent="bg_physics">
+          <mxGeometry x="20" y="36" width="360" height="270" as="geometry" />
+        </mxCell>
+
+        <!-- lj_potential.cpp -->
+        <mxCell id="lj" value="lj_potential.cpp - Force Model"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=left;spacingLeft=10;verticalAlign=top;fontStyle=1;"
+          vertex="1" parent="bg_physics">
+          <mxGeometry x="400" y="36" width="360" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="lj_detail" value="calcLennardJonesForce(dist2)&#xa;  F = 48*eps * [ (sig/r)^12 - 0.5*(sig/r)^6 ] / r^2&#xa;  Cutoff enforced at r = 2.5 * sigma&#xa;  Returns scalar magnitude (applied along delta)"
+          style="text;html=0;strokeColor=none;fillColor=none;fontSize=10;align=left;verticalAlign=top;spacingLeft=4;"
+          vertex="1" parent="bg_physics">
+          <mxGeometry x="400" y="36" width="360" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- velocity_velvet_int.cpp -->
+        <mxCell id="verlet" value="velocity_velvet_int.cpp - Integrator"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;align=left;spacingLeft=10;verticalAlign=top;fontStyle=1;"
+          vertex="1" parent="bg_physics">
+          <mxGeometry x="400" y="174" width="360" height="132" as="geometry" />
+        </mxCell>
+        <mxCell id="verlet_detail" value="velvetIntPart(particle, dt)&#xa;  a  = F / m&#xa;  v(t+dt) = v + a * dt         (symplectic Euler)&#xa;  x(t+dt) = x + v(t+dt) * dt&#xa;  Returns {newVelocity, newPosition}"
+          style="text;html=0;strokeColor=none;fillColor=none;fontSize=10;align=left;verticalAlign=top;spacingLeft=4;"
+          vertex="1" parent="bg_physics">
+          <mxGeometry x="400" y="174" width="360" height="132" as="geometry" />
+        </mxCell>
+
+        <!-- ================== PARTICLE LAYER ================== -->
+
+        <!-- Particle struct -->
+        <mxCell id="particle_struct" value="Particle struct (particles.h)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=left;spacingLeft=10;verticalAlign=top;fontStyle=1;"
+          vertex="1" parent="bg_particle">
+          <mxGeometry x="20" y="36" width="240" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="struct_detail" value="position  : sf::Vector2f&#xa;velocity  : sf::Vector2f&#xa;force     : sf::Vector2f&#xa;kineticEnergy : double&#xa;shape     : sf::CircleShape"
+          style="text;html=0;strokeColor=none;fillColor=none;fontSize=10;align=left;verticalAlign=top;spacingLeft=4;"
+          vertex="1" parent="bg_particle">
+          <mxGeometry x="20" y="36" width="240" height="120" as="geometry" />
+        </mxCell>
+
+        <!-- particle.cpp -->
+        <mxCell id="particle_cpp" value="particle.cpp - Behaviour"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=left;spacingLeft=10;verticalAlign=top;fontStyle=1;"
+          vertex="1" parent="bg_particle">
+          <mxGeometry x="20" y="174" width="240" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="pcpp_detail" value="update(dt)&#xa;  add gravity to force&#xa;  call velvetIntPart(*this, dt)&#xa;  kineticEnergy = 0.5 * m * v^2&#xa;  colour = velocityToColour(v)&#xa;checkBounds(w, h)&#xa;  elastic walls: v *= WALL_RESTITUTION&#xa;draw()  -&gt; window.draw(shape)"
+          style="text;html=0;strokeColor=none;fillColor=none;fontSize=10;align=left;verticalAlign=top;spacingLeft=4;"
+          vertex="1" parent="bg_particle">
+          <mxGeometry x="20" y="174" width="240" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- ================== RENDERING LAYER ================== -->
+
+        <!-- HudOverlay -->
+        <mxCell id="hud" value="HudOverlay (hud_overlay.cpp)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;fontSize=11;align=left;spacingLeft=10;verticalAlign=top;fontStyle=1;"
+          vertex="1" parent="bg_render">
+          <mxGeometry x="20" y="36" width="244" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="hud_detail" value="Text panel (300px right strip)&#xa;  Particles, Gravity, FPS&#xa;  Physics step ms&#xa;  KE total, LJ potential E&#xa;Energy graph (1200px x 170px bottom)&#xa;  std::deque energyHistory_&#xa;  sf::VertexArray live line chart"
+          style="text;html=0;strokeColor=none;fillColor=none;fontSize=10;align=left;verticalAlign=top;spacingLeft=4;"
+          vertex="1" parent="bg_render">
+          <mxGeometry x="20" y="36" width="244" height="160" as="geometry" />
+        </mxCell>
+
+        <!-- SFML Window -->
+        <mxCell id="sfml" value="SFML RenderWindow"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#333333;fontSize=11;align=left;spacingLeft=10;verticalAlign=top;fontStyle=1;"
+          vertex="1" parent="bg_render">
+          <mxGeometry x="20" y="214" width="244" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="sfml_detail" value="Window: 1500 x 970 px  (60 fps cap)&#xa;Sim box: 1200 x 800 (black fill)&#xa;HUD panel: 300 x 800 (right strip)&#xa;Energy graph: 1200 x 170 (bottom)"
+          style="text;html=0;strokeColor=none;fillColor=none;fontSize=10;align=left;verticalAlign=top;spacingLeft=4;"
+          vertex="1" parent="bg_render">
+          <mxGeometry x="20" y="214" width="244" height="110" as="geometry" />
+        </mxCell>
+
+        <!-- ================== BUILD / TEST LAYER ================== -->
+
+        <!-- tests -->
+        <mxCell id="tests" value="tests/test_physics.cpp  (CTest)"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff9c4;strokeColor=#f9a825;fontSize=11;align=left;spacingLeft=10;verticalAlign=top;fontStyle=1;"
+          vertex="1" parent="bg_build">
+          <mxGeometry x="20" y="36" width="340" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="tests_detail" value="calcDistSqr / calcDelta helpers&#xa;LJ force sign (repulsive at r&lt;sigma, attractive at r&gt;sigma)&#xa;Integrator: single-particle gravity drop validation&#xa;Wall reflection / restitution coefficient check"
+          style="text;html=0;strokeColor=none;fillColor=none;fontSize=10;align=left;verticalAlign=top;spacingLeft=4;"
+          vertex="1" parent="bg_build">
+          <mxGeometry x="20" y="36" width="340" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- CMakeLists -->
+        <mxCell id="cmake" value="CMakeLists.txt"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e5f5;strokeColor=#7b1fa2;fontSize=11;align=left;spacingLeft=10;verticalAlign=top;fontStyle=1;"
+          vertex="1" parent="bg_build">
+          <mxGeometry x="380" y="36" width="340" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="cmake_detail" value="C++17  |  find_package(SFML 2)&#xa;sim target: links sfml-graphics / window / system&#xa;physics_primitives_tests target registered with CTest&#xa;Copies fonts/ and icons/ to build output dir"
+          style="text;html=0;strokeColor=none;fillColor=none;fontSize=10;align=left;verticalAlign=top;spacingLeft=4;"
+          vertex="1" parent="bg_build">
+          <mxGeometry x="380" y="36" width="340" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="legend" value="Legend"
+          style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9f9f9;strokeColor=#aaaaaa;fontSize=11;align=left;spacingLeft=10;verticalAlign=top;fontStyle=1;"
+          vertex="1" parent="bg_build">
+          <mxGeometry x="1060" y="36" width="300" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_detail" value="Solid arrow  = function call / method invocation&#xa;Dashed arrow = #include / compile dependency&#xa;Swimlane     = logical layer grouping"
+          style="text;html=0;strokeColor=none;fillColor=none;fontSize=10;align=left;verticalAlign=top;spacingLeft=4;"
+          vertex="1" parent="bg_build">
+          <mxGeometry x="1060" y="36" width="300" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- ================== EDGES ================== -->
+
+        <!-- constants -> main (dashed include) -->
+        <mxCell id="e1" value="includes"
+          style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;fontSize=10;strokeColor=#d6b656;"
+          edge="1" source="constants" target="main" parent="bg_infra">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- constants -> utils (dashed include) -->
+        <mxCell id="e2" value="includes"
+          style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;fontSize=10;strokeColor=#d6b656;"
+          edge="1" source="constants" target="utils" parent="bg_infra">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- main -> grid (call) -->
+        <mxCell id="e3" value="buildNeighbourList()&#xa;calcNeighbourInteractions() x3"
+          style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=10;strokeColor=#6c8ebf;"
+          edge="1" source="main" target="grid" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- main -> particle_cpp (call) -->
+        <mxCell id="e4" value="p.update(dt)&#xa;p.checkBounds()&#xa;p.draw()"
+          style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=10;strokeColor=#6c8ebf;"
+          edge="1" source="main" target="particle_cpp" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- main -> hud (call) -->
+        <mxCell id="e5" value="hud.update()&#xa;hud.draw()"
+          style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=10;strokeColor=#6c8ebf;"
+          edge="1" source="main" target="hud" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- main -> utils (call) -->
+        <mxCell id="e6" value="clickTime()&#xa;randomDistribution()"
+          style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=10;strokeColor=#6c8ebf;"
+          edge="1" source="main" target="utils" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- grid -> lj -->
+        <mxCell id="e7" value="calcLennardJonesForce()"
+          style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=10;strokeColor=#d79b00;"
+          edge="1" source="grid" target="lj" parent="bg_physics">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- grid -> utils (cellCoord etc) -->
+        <mxCell id="e8" value="cellCoord()&#xa;calcDelta() calcDistSqr()"
+          style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=10;strokeColor=#d79b00;"
+          edge="1" source="grid" target="utils" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- particle_cpp -> verlet -->
+        <mxCell id="e9" value="velvetIntPart(*this, dt)"
+          style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=10;strokeColor=#82b366;"
+          edge="1" source="particle_cpp" target="verlet" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- particle_cpp -> utils -->
+        <mxCell id="e10" value="velocityToColour()&#xa;calcDistSqr()"
+          style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=10;strokeColor=#82b366;"
+          edge="1" source="particle_cpp" target="utils" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- particle_struct -> particle_cpp implements -->
+        <mxCell id="e11" value="implements"
+          style="edgeStyle=orthogonalEdgeStyle;endArrow=open;endFill=0;dashed=1;fontSize=10;strokeColor=#82b366;"
+          edge="1" source="particle_struct" target="particle_cpp" parent="bg_particle">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- hud -> sfml -->
+        <mxCell id="e12" value="draws via window ref"
+          style="edgeStyle=orthogonalEdgeStyle;endArrow=block;endFill=1;fontSize=10;strokeColor=#666666;"
+          edge="1" source="hud" target="sfml" parent="bg_render">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- tests -> lj -->
+        <mxCell id="e13" value="tests LJ force signs"
+          style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=block;endFill=1;fontSize=10;strokeColor=#f9a825;"
+          edge="1" source="tests" target="lj" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- tests -> verlet -->
+        <mxCell id="e14" value="tests integrator"
+          style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=block;endFill=1;fontSize=10;strokeColor=#f9a825;"
+          edge="1" source="tests" target="verlet" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- tests -> utils -->
+        <mxCell id="e15" value="tests helpers"
+          style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=block;endFill=1;fontSize=10;strokeColor=#f9a825;"
+          edge="1" source="tests" target="utils" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- cmake -> tests registers -->
+        <mxCell id="e16" value="registers add_test()"
+          style="edgeStyle=orthogonalEdgeStyle;dashed=1;endArrow=open;endFill=0;fontSize=10;strokeColor=#7b1fa2;"
+          edge="1" source="cmake" target="tests" parent="bg_build">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
